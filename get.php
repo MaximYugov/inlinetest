@@ -20,7 +20,7 @@ function getJson(string $url): array
 /**
  * @param PDO $db подключение к БД
  * @param array $data данные поста, которые нужно сохранить
- * @return bool удалилось ли выполнить запрос к БД
+ * @return bool удалось ли выполнить запрос к БД
  */
 function insertPost(PDO $db, array $data): bool
 {
