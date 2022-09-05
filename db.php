@@ -13,12 +13,12 @@ function connectToDb(): PDO
 		print "Ошибка подключения к базе данных: " . $e->getMessage();
 		die();
 	}
-	
+
 	return $db;
 }
 
 function execute(PDO $db, string $sql, array $values): bool
 {
 	$preparedStatement = $db->prepare($sql);
-    return $preparedStatement->execute($values);
+	return $preparedStatement->execute($values);
 }
