@@ -4,7 +4,7 @@ require_once('find.php');
 
 $token = 'my_secret_key';
 
-$query = isset($_POST['query']) ? $_POST['query'] : null;
+$query = isset($_GET['query']) ? htmlspecialchars($_GET['query']) : null;
 $posts = [];
 $search = false;
 
@@ -33,7 +33,7 @@ if (empty($query)) {
 </head>
 <body>
     <div class="wrapper">
-        <form action="search.php" method="POST">
+        <form action="/" method="GET">
             <div class="search">
                 <input type="text" name="query" value="<?=$query;?>">
                 <button>Найти</button>
