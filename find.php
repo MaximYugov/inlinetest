@@ -19,11 +19,11 @@ function searchPosts(string $query): array
         'query' => '%'.$query.'%',
     ];
     $comments = 'SELECT a.title, b.body FROM posts a, comments b WHERE b.body LIKE :query AND b.post_id = a.id';
-    $preparedStatement = $db->prepare($comments); //TODO
-    $res = $preparedStatement->execute($values); //TODO
+    $preparedStatement = $db->prepare($comments);
+    $res = $preparedStatement->execute($values);
 
     if ($res !== false) {
-        $posts = $preparedStatement->fetchAll(); //TODO
+        $posts = $preparedStatement->fetchAll();
         foreach ($posts as &$post) {
             $lines = explode("\n", $post['body']);
             $newLines = [];
