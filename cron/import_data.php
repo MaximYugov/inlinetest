@@ -1,10 +1,11 @@
 <?php
 
-if (!isset($token)) {
-    die('Nothing happend...');
-}
+/**
+ * Скрипт импортирует посты и записи в базу данных
+ */
 
-require_once('config.php');
+require_once('../config.php');
+require_once('../db.php');
 
 /**
  * @param string $url адрес, который вернет json
@@ -31,10 +32,8 @@ function insertPost(PDO $db, array $data): bool
         'body'      => $data['body'],
     ];
     $posts = 'INSERT INTO posts (id, user_id, title, body) VALUES (:id, :user_id, :title, :body)';
-    $preparedStatement = $db->prepare($posts);
-    $res = $preparedStatement->execute($values);
 
-    return $res;
+    return execute($db, $posts, $values);
 }
 
 /**
@@ -52,10 +51,8 @@ function insertComment(PDO $db, array $data): bool
         'body'      => $data['body'],
     ];
     $comments = 'INSERT INTO comments (id, post_id, name, email, body) VALUES (:id, :post_id, :name, :email, :body)';
-    $preparedStatement = $db->prepare($comments);
-    $res = $preparedStatement->execute($values);
 
-    return $res;
+	return execute($db, $comments, $values);
 }
 
 /*
@@ -64,12 +61,7 @@ function insertComment(PDO $db, array $data): bool
 |-----------------------------------------------------------------------
 */
 
-try {
-    $db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
-} catch (PDOException $e) {
-    print "Ошибка подключения к базе данных: " . $e->getMessage() . PHP_EOL;
-    die();
-}
+$db = connectToDb();
 
 /*
 |-----------------------------------------------------------------------
