@@ -5,8 +5,7 @@ if (!isset($token)) {
 }
 
 require_once('config.php');
-
-$query = isset($_POST['query']) ? $_POST['query'] : null;
+require_once('db.php');
 
 /**
  * @param string $query поисковый запрос
@@ -14,30 +13,17 @@ $query = isset($_POST['query']) ? $_POST['query'] : null;
  */
 function searchPosts(string $query): array
 {
-    /*
-    |-----------------------------------------------------------------------
-    | Подключаемся к базе данных
-    |-----------------------------------------------------------------------
-    */
-
-    try {
-        $db = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
-    } catch (PDOException $e) {
-        print "Ошибка подключения к базе данных: " . $e->getMessage() . PHP_EOL;
-        die();
-    }
-
-    /*--------------------------------------------------------------------*/
+    $db = connectToDb();
 
     $values = [
         'query' => '%'.$query.'%',
     ];
     $comments = 'SELECT a.title, b.body FROM posts a, comments b WHERE b.body LIKE :query AND b.post_id = a.id';
-    $preparedStatement = $db->prepare($comments);
-    $res = $preparedStatement->execute($values);
+    $preparedStatement = $db->prepare($comments); //TODO
+    $res = $preparedStatement->execute($values); //TODO
 
     if ($res !== false) {
-        $posts = $preparedStatement->fetchAll();
+        $posts = $preparedStatement->fetchAll(); //TODO
         foreach ($posts as &$post) {
             $lines = explode("\n", $post['body']);
             $newLines = [];
