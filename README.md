@@ -15,9 +15,9 @@
 
 ## Решение
 
-1. sql/sql.sql - SQL-запросы для создания БД 
+1. sql/db_inlinetest_create.sql - SQL-запросы для создания БД 
 
-2. cron/importData.php - PHP-скрипт импорта записей и комментариев в БД
+2. cron/import_data.php - PHP-скрипт импорта записей и комментариев в БД
 
 3. index.php - HTML-форма поиска записей по тексту комментария
 
